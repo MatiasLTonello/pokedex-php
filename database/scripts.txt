@@ -1,0 +1,34 @@
+<!-- Creamos tabla de pokemones -->
+
+CREATE TABLE pokemon (
+    id INT AUTO_INCREMENT PRIMARY KEY,         -- ID autoincremental
+    numero_identificador VARCHAR(50) NOT NULL UNIQUE, -- Número identificador único (editable)
+    imagen VARCHAR(255),                       -- Ruta de la imagen en el servidor
+    nombre VARCHAR(100) NOT NULL,              -- Nombre del Pokémon
+    tipo VARCHAR(50) NOT NULL,                -- Primer tipo (obligatorio)
+    descripcion TEXT                        -- Descripción del Pokémon
+);
+
+INSERT INTO pokemon (numero_identificador, imagen, nombre, tipo, descripcion)
+VALUES
+('001', '/images/bulbasaur.png', 'Bulbasaur', 'Planta', 'Este Pokémon es de tipo Planta y Veneno, y es conocido por su habilidad de absorber energía del sol.'),
+('002', '/images/ivysaur.png', 'Ivysaur', 'Planta', 'Ivysaur es la evolución de Bulbasaur. Cuando crece, su bulbo empieza a florecer.'),
+('003', '/images/venusaur.png', 'Venusaur', 'Planta', 'Venusaur es la forma final de Bulbasaur y puede liberar esporas venenosas al luchar.'),
+('004', '/images/charmander.png', 'Charmander', 'Fuego', 'Charmander tiene una llama en su cola que indica su estado de ánimo y salud.'),
+('005', '/images/charmeleon.png', 'Charmeleon', 'Fuego', 'Charmeleon es la evolución de Charmander. Su llama crece y se vuelve más feroz.'),
+('006', '/images/charizard.png', 'Charizard', 'Fuego', 'Charizard es una poderosa criatura voladora con habilidades de fuego. Es la evolución final de Charmander.');
+
+<!-- Creamos tabla de usuarios -->
+
+CREATE TABLE usuarios (
+    username VARCHAR(50) PRIMARY KEY,
+    password VARCHAR(255) NOT NULL
+);
+
+INSERT INTO usuarios (username, password) VALUES ('admin', 'admin');
+
+
+
+
+
+
