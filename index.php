@@ -14,6 +14,11 @@
      ?>
 
      <div class="container mt-4">
+         <!-- Barra de búsqueda -->
+         <form method="GET" action="index.php" class="d-flex justify-content-center mb-4">
+             <input type="text" name="search" class="form-control w-50" placeholder="Ingrese el nombre, tipo o número de pokémon">
+             <button type="submit" class="btn btn-primary ml-2">¿Quién es este pokémon?</button>
+         </form>
          <h2 class="text-center">Lista de Pokémon</h2>
          <table class="table table-bordered text-center">
              <thead class="table-light">
@@ -34,21 +39,49 @@
                  die("Conexión fallida: " . $conn->connect_error);
              }
 
-             $sql = "SELECT imagen, tipo, numero_identificador, nombre FROM pokemon";
-             $result = $conn->query($sql);
+             // Filtrar los resultados según la búsqueda
+             $search = isset($_GET['search']) ? $_GET['search'] : '';
+
+             $sql = "SELECT imagen, tipo, numero_identificador, nombre,id FROM pokemon";
+
+             // Si hay un valor de búsqueda, usar una consulta preparada
+             if (!empty($search)) {
+                 // Preparar la consulta con comodines LIKE
+                 $sql .= " WHERE nombre LIKE ? OR tipo LIKE ? OR numero_identificador LIKE ?";
+
+                 // Preparar la consulta SQL
+                 $stmt = $conn->prepare($sql);
+
+                 // Agregar los comodines de búsqueda (%)
+                 $search_param = '%' . $search . '%';
+
+                 // Enlazar los parámetros a la consulta preparada
+                 $stmt->bind_param('sss', $search_param, $search_param, $search_param);
+
+                 $stmt->execute();
+
+                 $result = $stmt->get_result();
+             } else {
+                 $result = $conn->query($sql);
+             }
 
              if ($result->num_rows > 0) {
                  while($row = $result->fetch_assoc()) {
+                     // Seleccionar la imagen del tipo de Pokémon
+                     $tipo = strtolower($row['tipo']); // Convertir el tipo a minúsculas para coincidir con el nombre de archivo
+                     $tipo_image_path = "./public/tipo_$tipo.webp"; // Ruta de la imagen basada en el tipo
+
                      echo "<tr>";
                      echo "<td><img src='" . $row['imagen'] . "' alt='Imagen de " . $row['nombre'] . "' style='width: 50px; height: 50px;'></td>";
-                     echo "<td>" . $row['tipo'] . "</td>";
+                     echo "<td><img src='$tipo_image_path' alt='Tipo " . $row['tipo'] . "' style='width: 50px; height: 50px;'></td>"; // Imagen del tipo
                      echo "<td>" . $row['numero_identificador'] . "</td>";
                      echo "<td>" . $row['nombre'] . "</td>";
+
                      if (isset($_SESSION['usuario'])) {
                          echo "<td>
-                      <a href='modificar.php?id=" . $row['numero_identificador'] . "' class='btn btn-warning btn-sm'>Modificación</a>
-                      <a href='baja.php?id=" . $row['numero_identificador'] . "' class='btn btn-danger btn-sm'>Baja</a>
-                    </td>";
+                  <a href='/pokecrud/pokemon/modificar.php?id=" . $row['id'] . "' class='btn btn-warning btn-sm'>Modificación</a>
+                  <a href='/pokecrud/pokemon/baja.php?id=" . $row['id'] . "' class='btn btn-danger btn-sm'>Baja</a>
+                </td>";
                      }
                      echo "</tr>";
                  }
@@ -63,7 +96,7 @@
 
          <?php if(isset($_SESSION['usuario'])): ?>
              <div class="text-center mt-4">
-                 <a href="nuevo_pokemon.php" class="btn btn-primary">Nuevo Pokémon</a>
+                 <a href="pokemon/nuevo_pokemon.php" class="btn btn-primary">Nuevo Pokémon</a>
              </div>
          <?php endif; ?>
      </div>
