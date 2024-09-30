@@ -32,7 +32,13 @@ include_once("../header.php");
 
         <div class="form-group">
             <label for="tipo">Tipo del Pokémon</label>
-            <input type="text" name="tipo" id="tipo" class="form-control" required>
+            <select name="tipo" id="tipo" class="form-control" required>
+                <option value="">Seleccione un tipo</option>
+                <option value="Fuego">Fuego</option>
+                <option value="Agua">Agua</option>
+                <option value="Planta">Planta</option>
+                <option value="Roca">Roca</option>
+            </select>
         </div>
 
         <div class="form-group">

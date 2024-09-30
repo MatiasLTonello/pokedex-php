@@ -94,8 +94,16 @@ include_once("../header.php");
         </div>
 
         <div class="mb-3">
-            <label for="tipo" class="form-label">Tipo:</label>
-            <input type="text" class="form-control" id="tipo" name="tipo" value="<?php echo $pokemon['tipo']; ?>" required>
+            <div class="form-group">
+                <label for="tipo">Tipo del Pokémon</label>
+                <select name="tipo" id="tipo" class="form-control" required>
+                    <option value="">Seleccione un tipo</option>
+                    <option value="Fuego">Fuego</option>
+                    <option value="Agua">Agua</option>
+                    <option value="Planta">Planta</option>
+                    <option value="Roca">Roca</option>
+                </select>
+            </div>
         </div>
 
         <div class="mb-3">
