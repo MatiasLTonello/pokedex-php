@@ -14,7 +14,6 @@
      ?>
 
      <div class="container mt-4">
-         <!-- Barra de búsqueda -->
          <form method="GET" action="index.php" class="d-flex justify-content-center mb-4">
              <input type="text" name="search" class="form-control w-50" placeholder="Ingrese el nombre, tipo o número de pokémon">
              <button type="submit" class="btn btn-primary ml-2">¿Quién es este pokémon?</button>

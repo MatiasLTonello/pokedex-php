@@ -1,7 +1,6 @@
 <?php
 session_start();
 if (!isset($_SESSION['usuario'])) {
-    // Redirigir si el usuario no está autenticado
     header("Location: index.php");
     exit();
 }
@@ -15,7 +14,6 @@ if ($conn->connect_error) {
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
 
-    // Consulta para obtener los datos del Pokémon actual
     $sql = "SELECT imagen, tipo, numero_identificador, nombre, descripcion FROM pokemon WHERE id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param('i', $id);
@@ -34,20 +32,17 @@ if (isset($_GET['id'])) {
     exit();
 }
 
-// Si se envió el formulario para modificar el Pokémon
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nombre = $_POST['nombre'];
     $tipo = $_POST['tipo'];
     $numero_identificador = $_POST['numero_identificador'];
     $descripcion = $_POST['descripcion'];
 
-    // Manejo de la imagen: Verificar si se subió una nueva imagen
     if ($_FILES['imagen']['error'] === UPLOAD_ERR_OK) {
         $imagenTmp = $_FILES['imagen']['tmp_name'];
         $imagenNombre = basename($_FILES['imagen']['name']);
         $imagenDestino = '../images/' . $imagenNombre;
 
-        // Mover la imagen a la carpeta 'images'
         if (move_uploaded_file($imagenTmp, $imagenDestino)) {
             $rutaImagenBD = 'images/' . $imagenNombre;
         } else {
@@ -55,7 +50,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit();
         }
     } else {
-        // Si no se subió una nueva imagen, conservar la ruta de la imagen actual
         $rutaImagenBD = $pokemon['imagen'];
     }
 

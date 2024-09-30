@@ -16,8 +16,8 @@
 <header>
     <nav class="navbar navbar-light bg-light">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">
-                <img src="https://via.placeholder.com/50" alt="Logo" width="30" height="30" class="d-inline-block align-text-top">
+            <a class="navbar-brand" href="/pokecrud/index.php">
+                <img src="/pokecrud/public/logo.svg" alt="Logo" width="30" height="30" class="d-inline-block align-text-top">
                 Logo
             </a>
             <span class="navbar-text fs-4 fw-bold">

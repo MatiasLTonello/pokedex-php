@@ -41,6 +41,11 @@ include_once("../header.php");
         </div>
 
         <div class="form-group">
+            <label for="descripcion">Descripcion</label>
+            <input type="TEXT" name="descripcion" id="descripcion" class="form-control" required>
+        </div>
+
+        <div class="form-group">
             <label for="imagen">Imagen del Pokémon</label>
             <input type="file" name="imagen" id="imagen" class="form-control" required>
         </div>
